@@ -10,7 +10,7 @@ using Project;
 namespace Project.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231224124803_AddRolesTable")]
+    [Migration("20231224130631_AddRolesTable")]
     partial class AddRolesTable
     {
         /// <inheritdoc />
@@ -87,7 +87,7 @@ namespace Project.Migrations
                     b.HasOne("Project.Models.Role", "Role")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Role");

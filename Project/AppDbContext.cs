@@ -59,8 +59,7 @@ namespace Project
             modelBuilder.Entity<Role>()
                 .HasMany(r => r.Users)
                 .WithOne(u => u.Role)
-                .HasForeignKey(u => u.RoleId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey(u => u.RoleId);
 
             base.OnModelCreating(modelBuilder);
         }
