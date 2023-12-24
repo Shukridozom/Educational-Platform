@@ -11,6 +11,7 @@ namespace Project
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Course> Courses { get; set; }
+        public DbSet<Lecture> Lectures { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration config)
             : base(options)
@@ -77,6 +78,28 @@ namespace Project
                 .HasOne(c => c.User)
                 .WithMany(u => u.Courses)
                 .HasForeignKey(c => c.UserId);
+
+
+            //Lecture Entity:
+            modelBuilder.Entity<Lecture>()
+                .Property(l => l.Title)
+                .HasMaxLength(128)
+                .IsRequired();
+
+            modelBuilder.Entity<Lecture>()
+                .Property(l => l.Body)
+                .HasMaxLength(4096)
+                .IsRequired();
+
+            modelBuilder.Entity<Lecture>()
+                .HasOne(l => l.Course)
+                .WithMany(c => c.Lectures)
+                .HasForeignKey(l => l.CourseId);
+
+            modelBuilder.Entity<Lecture>()
+                .HasKey(l => new { l.CourseId, l.Id});
+
+
 
             base.OnModelCreating(modelBuilder);
         }
