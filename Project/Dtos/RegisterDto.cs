@@ -32,5 +32,8 @@ namespace Project.Dtos
         [Required]
         [MaxLength(255)]
         public string LastName { get; set; }
+
+        [Required]
+        public int RoleId { get; set; }
     }
 }

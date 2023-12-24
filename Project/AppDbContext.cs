@@ -9,6 +9,7 @@ namespace Project
         private readonly IConfiguration _config;
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
 
         public AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration config)
@@ -53,6 +54,13 @@ namespace Project
                 .IsRequired()
                 .HasMaxLength(255);
 
+
+            //Role Entity:
+            modelBuilder.Entity<Role>()
+                .HasMany(r => r.Users)
+                .WithOne(u => u.Role)
+                .HasForeignKey(u => u.RoleId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(modelBuilder);
         }
