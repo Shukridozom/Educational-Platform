@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Project.Dtos;
 using Project.Models;
@@ -87,7 +88,7 @@ namespace Project.Controllers
 
         private User AuthenticateUser(LoginDto loginCredentials)
         {
-            var user = context.Users.SingleOrDefault(
+            var user = context.Users.Include(u => u.Role).SingleOrDefault(
                 u => u.Username.ToLower() == loginCredentials.Username.ToLower());
 
             if (user == null)
@@ -110,6 +111,7 @@ namespace Project.Controllers
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.GivenName, user.Username),
+                new Claim(ClaimTypes.Role, user.Role.Name)
             };
 
             var token = new JwtSecurityToken(config["Jwt:Issuer"],
