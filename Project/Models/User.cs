@@ -5,6 +5,7 @@
         public User()
         {
             Courses = new List<Course>();
+            Enrollments = new List<Enrollment>();
         }
         public int Id { get; set; }
         public string Username { get; set; }
@@ -15,5 +16,6 @@
         public int RoleId { get; set; }
         public Role Role { get; set; }
         public IList<Course> Courses { get; set; }
+        public IList<Enrollment> Enrollments { get; set; }
     }
 }

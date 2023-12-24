@@ -12,6 +12,7 @@ namespace Project
         public DbSet<Role> Roles { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Lecture> Lectures { get; set; }
+        public DbSet<Enrollment> Enrollments { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration config)
             : base(options)
@@ -99,6 +100,22 @@ namespace Project
             modelBuilder.Entity<Lecture>()
                 .HasKey(l => new { l.CourseId, l.Id});
 
+
+            //Enrollment Entity:
+            modelBuilder.Entity<Enrollment>()
+                .HasOne(e => e.User)
+                .WithMany(u => u.Enrollments)
+                .HasForeignKey(e => e.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Enrollment>()
+                .HasOne(e => e.Course)
+                .WithMany(c => c.Enrollments)
+                .HasForeignKey(e => e.CourseId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Enrollment>()
+                .HasKey(e => new { e.UserId, e.CourseId });
 
 
             base.OnModelCreating(modelBuilder);
