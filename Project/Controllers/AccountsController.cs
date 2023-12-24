@@ -70,6 +70,20 @@ namespace Project.Controllers
             return BadRequest(GenerateJsonErrorResponse("username", "The username or password is incorrect"));
         }
 
+        [HttpGet]
+        [Route("/api/roles")]
+        public IActionResult GetRoles()
+        {
+            //Getting all roles except Admin:
+            var rolesFromDb = context.Roles.Where(r => r.Name != RoleName.Admin).ToList();
+            var rolesDto = new List<RoleDto>();
+            foreach(var role in rolesFromDb)
+            {
+                rolesDto.Add(new RoleDto() { Id = role.Id, Name = role.Name});
+            }
+
+            return Ok(rolesDto);
+        }
 
         private User AuthenticateUser(LoginDto loginCredentials)
         {
