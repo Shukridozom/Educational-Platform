@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Project.Core;
 using Project.Core.Repositories;
 using Project.Persistence.Repositories;
 
@@ -15,6 +16,7 @@ namespace Project.Persistence
             services.AddTransient<ICourseRepository, CourseRepository>();
             services.AddTransient<ILectureRepository, LectureRepository>();
             services.AddTransient<IEnrollmentRepository, EnrollmentRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddDbContext<AppDbContext>(opt => opt
                 .UseMySQL(config.GetConnectionString("MySQL_Connection")));
