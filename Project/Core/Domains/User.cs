@@ -15,6 +15,7 @@
         public string LastName { get; set; }
         public int RoleId { get; set; }
         public Role Role { get; set; }
+        public double Balance { get; set; }
         public IList<Course> Courses { get; set; }
         public IList<Enrollment> Enrollments { get; set; }
     }
