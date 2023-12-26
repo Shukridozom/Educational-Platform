@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Project.Models;
+using Project.Persistence;
 using System.Security.Claims;
 using System.Text.Json.Nodes;
 

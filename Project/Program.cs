@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Project.Persistence;
 using System;
 using System.Text;
 using static Org.BouncyCastle.Math.EC.ECCurve;
@@ -45,8 +46,8 @@ namespace Project
                     }
                 });
             });
-            builder.Services.AddDbContext<AppDbContext>(opt => opt
-                .UseMySQL(builder.Configuration.GetConnectionString("MySQL_Connection")));
+
+            builder.Services.AddRepositories(builder.Configuration);
 
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>

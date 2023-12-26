@@ -1,4 +1,4 @@
-﻿namespace Project.Dtos
+﻿namespace Project.Core.Dtos
 {
     public class UserDto
     {

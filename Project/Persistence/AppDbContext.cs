@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Project.Models;
+using Project.Core.Domains;
 using static Org.BouncyCastle.Math.EC.ECCurve;
 
-namespace Project
+namespace Project.Persistence
 {
     public class AppDbContext : DbContext
     {
@@ -98,7 +98,7 @@ namespace Project
                 .HasForeignKey(l => l.CourseId);
 
             modelBuilder.Entity<Lecture>()
-                .HasKey(l => new { l.CourseId, l.Id});
+                .HasKey(l => new { l.CourseId, l.Id });
 
 
             //Enrollment Entity:

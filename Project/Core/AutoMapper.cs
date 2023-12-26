@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Project.Dtos;
-using Project.Models;
+using Project.Core.Domains;
+using Project.Core.Dtos;
 
-namespace Project
+namespace Project.Core
 {
     public class AutoMapper : Profile
     {

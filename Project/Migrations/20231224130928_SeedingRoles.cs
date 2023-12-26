@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
-using Project.Models;
+using Project.Core.Domains;
 
 #nullable disable
 

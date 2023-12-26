@@ -1,4 +1,4 @@
-﻿namespace Project.Models
+﻿namespace Project.Core.Domains
 {
     public class User
     {

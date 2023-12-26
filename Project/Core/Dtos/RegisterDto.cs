@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Project.Dtos
+namespace Project.Core.Dtos
 {
     public class RegisterDto
     {
