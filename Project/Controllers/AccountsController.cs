@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Project.Core;
 using Project.Core.Domains;
 using Project.Core.Dtos;
 using Project.Persistence;
@@ -16,8 +17,8 @@ namespace Project.Controllers
     [ApiController]
     public class AccountsController : AppControllerBase
     {
-        public AccountsController(AppDbContext context, IConfiguration config, IMapper mapper)
-            : base(context, config, mapper)
+        public AccountsController(IUnitOfWork unitOfWork, IConfiguration config, IMapper mapper)
+            : base(unitOfWork, config, mapper)
         {
 
         }
@@ -26,7 +27,7 @@ namespace Project.Controllers
         [Route("/api/accounts/{id}")]
         public IActionResult GetAccount(int id)
         {
-            var user = context.Users.SingleOrDefault(u => u.Id == id);
+            var user = unitOfWork.Users.SingleOrDefault(u => u.Id == id);
             if (user == null)
                 return NotFound();
 
@@ -37,7 +38,7 @@ namespace Project.Controllers
         public IActionResult Register(RegisterDto userDto)
         {
 
-            var userWithSameCredentials = context.Users
+            var userWithSameCredentials = unitOfWork.Users
                 .SingleOrDefault(u => u.Username.ToLower() == userDto.Username.ToLower()
                 || u.Email.ToLower() == userDto.Email.ToLower());
             if (userWithSameCredentials != null)
@@ -50,9 +51,9 @@ namespace Project.Controllers
 
             var user = mapper.Map<RegisterDto, User>(userDto);
             user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
-            context.Users.Add(user);
+            unitOfWork.Users.Add(user);
 
-            context.SaveChanges();
+            unitOfWork.Complete();
 
             return CreatedAtAction(nameof(GetAccount), new { Id = user.Id }, mapper.Map<User, UserDto>(user));
         }
@@ -76,8 +77,7 @@ namespace Project.Controllers
         [Route("/api/roles")]
         public IActionResult GetRoles()
         {
-            //Getting all roles except Admin:
-            var rolesFromDb = context.Roles.Where(r => r.Name != RoleName.Admin).ToList();
+            var rolesFromDb = unitOfWork.Roles.GetRolesExceptAdmin();
             var rolesDto = new List<RoleDto>();
             foreach(var role in rolesFromDb)
             {
@@ -89,8 +89,7 @@ namespace Project.Controllers
 
         private User AuthenticateUser(LoginDto loginCredentials)
         {
-            var user = context.Users.Include(u => u.Role).SingleOrDefault(
-                u => u.Username.ToLower() == loginCredentials.Username.ToLower());
+            var user = unitOfWork.Users.GetUserWithRole(loginCredentials.Username);
 
             if (user == null)
                 return null;

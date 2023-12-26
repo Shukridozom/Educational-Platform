@@ -4,5 +4,6 @@ namespace Project.Core.Repositories
 {
     public interface IRoleRepository : IRepository<Role>
     {
+        IEnumerable<Role> GetRolesExceptAdmin();
     }
 }

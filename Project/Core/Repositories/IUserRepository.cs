@@ -4,5 +4,6 @@ namespace Project.Core.Repositories
 {
     public interface IUserRepository : IRepository<User>
     {
+        User GetUserWithRole(string username);
     }
 }

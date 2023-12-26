@@ -1,4 +1,5 @@
-﻿using Project.Core.Domains;
+﻿using Microsoft.EntityFrameworkCore;
+using Project.Core.Domains;
 using Project.Core.Repositories;
 
 namespace Project.Persistence.Repositories
@@ -9,6 +10,12 @@ namespace Project.Persistence.Repositories
             :base(context)
         {
 
+        }
+
+        public User GetUserWithRole(string username)
+        {
+            return Context.Users.Include(u => u.Role).SingleOrDefault(
+                            u => u.Username.ToLower() == username.ToLower());
         }
     }
 }

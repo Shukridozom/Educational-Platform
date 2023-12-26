@@ -10,5 +10,10 @@ namespace Project.Persistence.Repositories
         {
 
         }
+
+        public IEnumerable<Role> GetRolesExceptAdmin()
+        {
+            return Context.Roles.Where(r => r.Name != RoleName.Admin).ToList();
+        }
     }
 }

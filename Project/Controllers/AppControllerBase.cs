@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Project.Core;
 using Project.Persistence;
 using System.Security.Claims;
 using System.Text.Json.Nodes;
@@ -9,13 +10,13 @@ namespace Project.Controllers
 {
     public class AppControllerBase : ControllerBase
     {
-        protected readonly AppDbContext context;
+        protected readonly IUnitOfWork unitOfWork;
         protected readonly IConfiguration config;
         protected readonly IMapper mapper;
 
-        public AppControllerBase(AppDbContext context, IConfiguration config, IMapper mapper)
+        public AppControllerBase(IUnitOfWork unitOfWork, IConfiguration config, IMapper mapper)
         {
-            this.context = context;
+            this.unitOfWork = unitOfWork;
             this.config = config;
             this.mapper = mapper;
         }
