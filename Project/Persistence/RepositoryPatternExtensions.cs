@@ -5,7 +5,7 @@ using Project.Persistence.Repositories;
 
 namespace Project.Persistence
 {
-    public static class UnitOfWorkExtensions
+    public static class RepositoryPatternExtensions
     {
         public static IServiceCollection AddRepositories(
             this IServiceCollection services, 
