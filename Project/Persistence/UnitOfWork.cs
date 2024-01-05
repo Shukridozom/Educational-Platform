@@ -11,13 +11,15 @@ namespace Project.Persistence
         public ICourseRepository Course { get; }
         public ILectureRepository Lectures { get; }
         public IEnrollmentRepository Enrollments { get; }
+        public ISystemVariablesRepository SystemVariables { get; set; }
 
         public UnitOfWork(AppDbContext context,
             IUserRepository userRepository,
             IRoleRepository roleRepository,
             ICourseRepository courseRepository,
             ILectureRepository lectureRepository,
-            IEnrollmentRepository enrollmentRepository
+            IEnrollmentRepository enrollmentRepository,
+            ISystemVariablesRepository systemVariablesRepository
             )
         {
             this.context = context;
@@ -26,6 +28,7 @@ namespace Project.Persistence
             Course = courseRepository;
             Lectures = lectureRepository;
             Enrollments = enrollmentRepository;
+            SystemVariables = systemVariablesRepository;
         }
 
         public int Complete()

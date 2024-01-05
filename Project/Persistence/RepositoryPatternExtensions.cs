@@ -16,6 +16,7 @@ namespace Project.Persistence
             services.AddTransient<ICourseRepository, CourseRepository>();
             services.AddTransient<ILectureRepository, LectureRepository>();
             services.AddTransient<IEnrollmentRepository, EnrollmentRepository>();
+            services.AddTransient<ISystemVariablesRepository, SystemVariablesRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddDbContext<AppDbContext>(opt => opt

@@ -9,6 +9,7 @@ namespace Project.Core
         ICourseRepository Course { get; }
         ILectureRepository Lectures { get; }
         IEnrollmentRepository Enrollments { get; }
+        ISystemVariablesRepository SystemVariables { get; }
         int Complete();
     }
 }
