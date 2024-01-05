@@ -13,6 +13,7 @@ namespace Project.Persistence
         public DbSet<Course> Courses { get; set; }
         public DbSet<Lecture> Lectures { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
+        public DbSet<SystemVariables> SystemVariables { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration config)
             : base(options)
