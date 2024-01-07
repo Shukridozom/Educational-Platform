@@ -6,6 +6,7 @@
         {
             Courses = new List<Course>();
             Enrollments = new List<Enrollment>();
+            PaymentWithdraws = new List<PaymentWithdraw>();
         }
         public int Id { get; set; }
         public string Username { get; set; }
@@ -18,5 +19,6 @@
         public double Balance { get; set; }
         public IList<Course> Courses { get; set; }
         public IList<Enrollment> Enrollments { get; set; }
+        public IList<PaymentWithdraw> PaymentWithdraws { get; set; }
     }
 }
