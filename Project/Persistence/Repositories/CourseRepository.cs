@@ -1,4 +1,5 @@
-﻿using Project.Core.Domains;
+﻿using Microsoft.EntityFrameworkCore;
+using Project.Core.Domains;
 using Project.Core.Repositories;
 
 namespace Project.Persistence.Repositories
@@ -9,6 +10,11 @@ namespace Project.Persistence.Repositories
             :base(context)
         {
 
+        }
+
+        public Course GetCourseWithAuthor(int courseId)
+        {
+            return Context.Courses.Include(c => c.User).SingleOrDefault(c => c.Id == courseId);
         }
     }
 }

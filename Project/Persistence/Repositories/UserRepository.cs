@@ -12,6 +12,11 @@ namespace Project.Persistence.Repositories
 
         }
 
+        public User GetStudentWithEnrollments(int userId)
+        {
+            return Context.Users.Include(u => u.Enrollments).SingleOrDefault(u => u.Id == userId);
+        }
+
         public User GetUserWithRole(string username)
         {
             return Context.Users.Include(u => u.Role).SingleOrDefault(
