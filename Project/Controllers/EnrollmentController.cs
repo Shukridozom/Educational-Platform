@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Project.Core;
 using Project.Core.Domains;
+using Project.Core.Dtos;
 
 namespace Project.Controllers
 {
@@ -29,8 +30,12 @@ namespace Project.Controllers
                 userId = GetUserId();
 
             var enrollments = unitOfWork.Enrollments.Find(en => en.UserId == userId);
+            var enrollemntDtos = new List<EnrollmentDto>();
 
-            return Ok(enrollments);
+            foreach (var enrollment in enrollments)
+                enrollemntDtos.Add(mapper.Map<Enrollment, EnrollmentDto>(enrollment));
+
+            return Ok(enrollemntDtos);
         }
 
         [Authorize(Roles = RoleName.Student)]

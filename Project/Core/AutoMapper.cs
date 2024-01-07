@@ -14,6 +14,8 @@ namespace Project.Core
 
             CreateMap<NewCourseDto, Course>();
             CreateMap<Course, CourseDto>();
+
+            CreateMap<Enrollment, EnrollmentDto>();
         }
     }
 }
