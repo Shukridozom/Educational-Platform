@@ -12,6 +12,8 @@ namespace Project.Persistence
         public ILectureRepository Lectures { get; }
         public IEnrollmentRepository Enrollments { get; }
         public ISystemVariablesRepository SystemVariables { get; set; }
+        public IPaymentWithdrawRepository PaymentWithdraw { get; }
+        public IPaymentWithdrawTypeRepository PaymentWithdrawTypes { get; }
 
         public UnitOfWork(AppDbContext context,
             IUserRepository userRepository,
@@ -19,7 +21,9 @@ namespace Project.Persistence
             ICourseRepository courseRepository,
             ILectureRepository lectureRepository,
             IEnrollmentRepository enrollmentRepository,
-            ISystemVariablesRepository systemVariablesRepository
+            ISystemVariablesRepository systemVariablesRepository,
+            IPaymentWithdrawRepository paymentWithdrawRepository,
+            IPaymentWithdrawTypeRepository paymentWithdrawTypeRepository
             )
         {
             this.context = context;
@@ -29,6 +33,8 @@ namespace Project.Persistence
             Lectures = lectureRepository;
             Enrollments = enrollmentRepository;
             SystemVariables = systemVariablesRepository;
+            PaymentWithdraw = paymentWithdrawRepository;
+            PaymentWithdrawTypes = paymentWithdrawTypeRepository;
         }
 
         public int Complete()

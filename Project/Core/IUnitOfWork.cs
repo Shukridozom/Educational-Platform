@@ -10,6 +10,8 @@ namespace Project.Core
         ILectureRepository Lectures { get; }
         IEnrollmentRepository Enrollments { get; }
         ISystemVariablesRepository SystemVariables { get; }
+        IPaymentWithdrawRepository PaymentWithdraw { get; }
+        IPaymentWithdrawTypeRepository PaymentWithdrawTypes { get; }
         int Complete();
     }
 }
