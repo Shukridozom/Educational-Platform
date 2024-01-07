@@ -9,9 +9,9 @@ namespace Project.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SiteProfitPercentage : AppControllerBase
+    public class SiteProfitPercentageController : AppControllerBase
     {
-        public SiteProfitPercentage(IUnitOfWork unitOfWork, IConfiguration config, IMapper mapper)
+        public SiteProfitPercentageController(IUnitOfWork unitOfWork, IConfiguration config, IMapper mapper)
             : base(unitOfWork, config, mapper)
         {
 
