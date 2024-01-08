@@ -24,9 +24,14 @@ namespace Project.Controllers
         }
 
         [HttpGet]
-        [Route("/api/accounts/{id}")]
-        public IActionResult GetAccount(int id)
+        [Route("/api/accounts/{id?}")]
+        public IActionResult GetAccount(int id = 0)
         {
+
+            if (HttpContext.User.IsInRole(RoleName.Student) || HttpContext.User.IsInRole(RoleName.Author))
+                id = GetUserId();
+
+
             var user = unitOfWork.Users.SingleOrDefault(u => u.Id == id);
             if (user == null)
                 return NotFound();
