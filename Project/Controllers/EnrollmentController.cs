@@ -20,12 +20,12 @@ namespace Project.Controllers
         }
 
         [Authorize(Roles = $"{RoleName.Student},{RoleName.Admin}")]
-        [HttpGet("{studentId}")]
-        public IActionResult Get(int? studentId)
+        [HttpGet("{studentId?}")]
+        public IActionResult Get(int studentId = 0)
         {
             int userId;
             if (HttpContext.User.IsInRole(RoleName.Admin))
-                userId = studentId.Value;
+                userId = studentId;
             else
                 userId = GetUserId();
 
