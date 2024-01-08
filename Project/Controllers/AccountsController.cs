@@ -38,6 +38,10 @@ namespace Project.Controllers
         public IActionResult Register(RegisterDto userDto)
         {
 
+            var roles = unitOfWork.Roles.GetRolesExceptAdmin();
+            if (roles.SingleOrDefault(r => r.Id == userDto.RoleId) == null)
+                return BadRequest("Unavailable roleId");
+
             var userWithSameCredentials = unitOfWork.Users
                 .SingleOrDefault(u => u.Username.ToLower() == userDto.Username.ToLower()
                 || u.Email.ToLower() == userDto.Email.ToLower());
