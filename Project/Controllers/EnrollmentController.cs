@@ -66,6 +66,7 @@ namespace Project.Controllers
 
             courseWithAuthor.User.Balance += enrollment.Price - enrollment.AdminPortionOfPrice;
             student.Balance -= enrollment.Price;
+            student.Enrollments.Add(enrollment);
 
             unitOfWork.Complete();
 
