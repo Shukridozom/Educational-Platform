@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,15 +25,12 @@ namespace Project.Controllers
         }
 
         [HttpGet]
-        [Route("/api/accounts/{id?}")]
-        public IActionResult GetAccount(int id = 0)
+        [Authorize]
+        [Route("/api/accounts")]
+        public IActionResult GetAccount()
         {
 
-            if (HttpContext.User.IsInRole(RoleName.Student) || HttpContext.User.IsInRole(RoleName.Author))
-                id = GetUserId();
-
-
-            var user = unitOfWork.Users.SingleOrDefault(u => u.Id == id);
+            var user = unitOfWork.Users.SingleOrDefault(u => u.Id == GetUserId());
             if (user == null)
                 return NotFound();
 
