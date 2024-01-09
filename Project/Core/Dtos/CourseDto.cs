@@ -9,6 +9,6 @@ namespace Project.Core.Dtos
         public string Description { get; set; }
         public double Price { get; set; }
         public DateTime Date { get; set; }
-        public int UserId { get; set; }
+        public int AuthorId { get; set; }
     }
 }
