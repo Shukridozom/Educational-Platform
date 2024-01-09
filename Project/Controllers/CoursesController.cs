@@ -26,7 +26,12 @@ namespace Project.Controllers
         public IActionResult Get() 
         {
             var courses = unitOfWork.Course.GetAll();
-            return Ok(courses);
+            var courseDto = new List<CourseDto>();
+            foreach(var course in courses)
+            {
+                courseDto.Add(mapper.Map<Course, CourseDto>(course));
+            }
+            return Ok(courseDto);
         }
 
         [Authorize(Roles = $"{RoleName.Admin},{RoleName.Author},{RoleName.Student}")]
