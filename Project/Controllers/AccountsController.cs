@@ -30,7 +30,7 @@ namespace Project.Controllers
         public IActionResult GetAccount()
         {
 
-            var user = unitOfWork.Users.SingleOrDefault(u => u.Id == GetUserId());
+            var user = unitOfWork.Users.GetUserWithRole(GetUserId());
             if (user == null)
                 return NotFound();
 

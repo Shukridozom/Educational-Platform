@@ -22,5 +22,11 @@ namespace Project.Persistence.Repositories
             return Context.Users.Include(u => u.Role).SingleOrDefault(
                             u => u.Username.ToLower() == username.ToLower());
         }
+
+        public User GetUserWithRole(int id)
+        {
+            return Context.Users.Include(u => u.Role).SingleOrDefault(
+                u => u.Id == id);
+        }
     }
 }

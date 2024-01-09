@@ -10,7 +10,8 @@ namespace Project.Core
         {
             CreateMap<RegisterDto, User>();
             CreateMap<LoginDto, User>();
-            CreateMap<User, UserDto>();
+            CreateMap<User, UserDto>()
+                .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role.Name));
 
             CreateMap<NewCourseDto, Course>();
             CreateMap<Course, CourseDto>()
