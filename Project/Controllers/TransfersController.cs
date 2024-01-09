@@ -41,5 +41,33 @@ namespace Project.Controllers
 
             return Ok();
         }
+
+        [Authorize(Roles = RoleName.Admin)]
+        [HttpPost("Deposit")]
+        public IActionResult Deposit(int userId, double amount)
+        {
+            var student = unitOfWork.Users.Get(userId);
+            var depositType = unitOfWork.PaymentWithdrawTypes.SingleOrDefault(pwt => pwt.Name == PaymentWithdrawTypeNames.Payment);
+
+            if (student == null)
+                return NotFound("user was not found");
+
+            if (student.RoleId != unitOfWork.Roles.GetStudentRoleId())
+                return BadRequest("This user is not authorized as a student");
+
+            var deposit = new PaymentWithdraw()
+            {
+                UserId = student.Id,
+                Date = DateTime.Now,
+                Type = depositType,
+                Amount = amount
+            };
+
+            student.Balance += amount;
+            student.PaymentWithdraws.Add(deposit);
+            unitOfWork.Complete();
+
+            return Ok();
+        }
     }
 }
