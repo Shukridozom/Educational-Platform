@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Project.Core;
 using Project.Core.Domains;
+using Project.Core.Dtos;
 
 namespace Project.Controllers
 {
@@ -20,10 +21,10 @@ namespace Project.Controllers
 
         [Authorize(Roles = RoleName.Author)]
         [HttpPost("withdraw")]
-        public IActionResult Withdraw(double amount)
+        public IActionResult Withdraw(WithdrawDto dto)
         {
             var user = unitOfWork.Users.Get(GetUserId());
-            if (user.Balance < amount)
+            if (user.Balance < dto.Amount)
                 return BadRequest("Your account does not have enough balance to complete this withdraw");
 
             var withdrawType = unitOfWork.PaymentWithdrawTypes.SingleOrDefault(pwt => pwt.Name == PaymentWithdrawTypeNames.Withdraw);
@@ -33,9 +34,9 @@ namespace Project.Controllers
                 UserId = GetUserId(),
                 Date = DateTime.Now,
                 Type = withdrawType,
-                Amount = amount
+                Amount = dto.Amount
             };
-            user.Balance -= amount;
+            user.Balance -= dto.Amount;
             user.PaymentWithdraws.Add(withdraw);
             unitOfWork.Complete();
 
@@ -44,9 +45,9 @@ namespace Project.Controllers
 
         [Authorize(Roles = RoleName.Admin)]
         [HttpPost("Deposit")]
-        public IActionResult Deposit(int userId, double amount)
+        public IActionResult Deposit(DepositDto dto)
         {
-            var student = unitOfWork.Users.Get(userId);
+            var student = unitOfWork.Users.Get(dto.UserId);
             var depositType = unitOfWork.PaymentWithdrawTypes.SingleOrDefault(pwt => pwt.Name == PaymentWithdrawTypeNames.Payment);
 
             if (student == null)
@@ -60,10 +61,10 @@ namespace Project.Controllers
                 UserId = student.Id,
                 Date = DateTime.Now,
                 Type = depositType,
-                Amount = amount
+                Amount = dto.Amount
             };
 
-            student.Balance += amount;
+            student.Balance += dto.Amount;
             student.PaymentWithdraws.Add(deposit);
             unitOfWork.Complete();
 
