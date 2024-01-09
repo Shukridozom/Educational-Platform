@@ -19,17 +19,12 @@ namespace Project.Controllers
 
 
         }
-        
+
         [HttpGet("balance")]
         public IActionResult GetBalance()
         {
             return Ok(unitOfWork.PaymentWithdraw.GetSystemBalance());
         }
 
-        [HttpGet("profit")]
-        public IActionResult GetProfit()
-        {
-            return Ok(unitOfWork.Enrollments.GetSystemProfit());
-        }
     }
 }

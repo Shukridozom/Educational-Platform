@@ -4,5 +4,6 @@ namespace Project.Core.Repositories
 {
     public interface IPaymentWithdrawRepository : IRepository<PaymentWithdraw>
     {
+        double GetSystemBalance();
     }
 }
