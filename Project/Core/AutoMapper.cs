@@ -16,7 +16,8 @@ namespace Project.Core
             CreateMap<Course, CourseDto>()
                 .ForMember(dest => dest.AuthorId, opt => opt.MapFrom(src => src.UserId));
 
-            CreateMap<Enrollment, EnrollmentDto>();
+            CreateMap<Enrollment, EnrollmentDto>()
+                .ForMember(dest => dest.StudentId, opt => opt.MapFrom(src => src.UserId));
         }
     }
 }
