@@ -15,5 +15,15 @@ namespace Project.Persistence.Repositories
         {
             return Context.Enrollments.Where(en => en.UserId == userId).Select(en => en.CourseId).ToList();
         }
+
+        public double GetSystemProfit()
+        {
+            var enrollments = Context.Enrollments.ToList();
+            double profit = 0;
+            foreach (var enrollment in enrollments)
+                profit += enrollment.AdminPortionOfPrice;
+
+            return profit;
+        }
     }
 }

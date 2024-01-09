@@ -26,5 +26,11 @@ namespace Project.Controllers
             return Ok(unitOfWork.PaymentWithdraw.GetSystemBalance());
         }
 
+        [HttpGet("profit")]
+        public IActionResult GetProfit()
+        {
+            return Ok(unitOfWork.Enrollments.GetSystemProfit());
+        }
+
     }
 }
