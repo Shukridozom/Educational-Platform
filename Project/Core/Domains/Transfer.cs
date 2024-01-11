@@ -1,9 +1,9 @@
 ﻿namespace Project.Core.Domains
 {
-    public class PaymentWithdraw
+    public class Transfer
     {
         public int Id { get; set; }
-        public PaymentWithdrawType Type { get; set; }
+        public TransferType Type { get; set; }
         public byte TypeId { get; set; }
         public User User { get; set; }
         public int UserId { get; set; }

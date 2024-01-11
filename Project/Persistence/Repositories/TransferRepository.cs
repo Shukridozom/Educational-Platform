@@ -4,9 +4,9 @@ using Project.Core.Repositories;
 
 namespace Project.Persistence.Repositories
 {
-    public class PaymentWithdrawRepository : Repository<PaymentWithdraw>, IPaymentWithdrawRepository
+    public class TransferRepository : Repository<Transfer>, ITransferRepository
     {
-        public PaymentWithdrawRepository(AppDbContext context)
+        public TransferRepository(AppDbContext context)
             :base(context)
         {
 
@@ -14,10 +14,10 @@ namespace Project.Persistence.Repositories
 
         public double GetSystemBalance()
         {
-            var transfers = Context.PaymentWithdraw.Include(t => t.Type).ToList();
+            var transfers = Context.Transfer.Include(t => t.Type).ToList();
             double balance = 0;
             foreach (var transfer in transfers)
-                if (transfer.Type.Name == PaymentWithdrawTypeNames.Payment)
+                if (transfer.Type.Name == TransferTypeNames.Payment)
                     balance += transfer.Amount;
                 else
                     balance -= transfer.Amount;

@@ -2,7 +2,7 @@
 
 namespace Project.Core.Repositories
 {
-    public interface IPaymentWithdrawRepository : IRepository<PaymentWithdraw>
+    public interface ITransferRepository : IRepository<Transfer>
     {
         double GetSystemBalance();
     }

@@ -14,8 +14,8 @@ namespace Project.Persistence
         public DbSet<Lecture> Lectures { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<SystemVariables> SystemVariables { get; set; }
-        public DbSet<PaymentWithdrawType> PaymentWithdrawTypes { get; set; }
-        public DbSet<PaymentWithdraw> PaymentWithdraw { get; set; }
+        public DbSet<TransferType> TransferTypes { get; set; }
+        public DbSet<Transfer> Transfer { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration config)
             : base(options)
@@ -121,26 +121,26 @@ namespace Project.Persistence
                 .HasKey(e => new { e.UserId, e.CourseId });
 
             //PaymentWithdraw Entity:
-            modelBuilder.Entity<PaymentWithdraw>()
+            modelBuilder.Entity<Transfer>()
                 .HasOne(pw => pw.User)
                 .WithMany(u => u.PaymentWithdraws)
                 .HasForeignKey(pw => pw.UserId);
 
-            modelBuilder.Entity<PaymentWithdraw>()
+            modelBuilder.Entity<Transfer>()
                 .HasOne(pw => pw.Type)
                 .WithMany(t => t.PaymentWithdraws)
                 .HasForeignKey(pw => pw.TypeId);
 
 
             //PaymentWithdrawType Entity:
-            modelBuilder.Entity<PaymentWithdrawType>()
+            modelBuilder.Entity<TransferType>()
                 .HasKey(pwt => pwt.Id);
 
-            modelBuilder.Entity<PaymentWithdrawType>()
+            modelBuilder.Entity<TransferType>()
                 .Property(pwt => pwt.Id)
                 .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<PaymentWithdrawType>()
+            modelBuilder.Entity<TransferType>()
                 .Property(pwt => pwt.Name)
                 .HasMaxLength(128);
 

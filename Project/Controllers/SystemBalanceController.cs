@@ -23,7 +23,7 @@ namespace Project.Controllers
         [HttpGet("balance")]
         public IActionResult GetBalance()
         {
-            return Ok(unitOfWork.PaymentWithdraw.GetSystemBalance());
+            return Ok(unitOfWork.Transfers.GetSystemBalance());
         }
 
         [HttpGet("profit")]

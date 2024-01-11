@@ -27,9 +27,9 @@ namespace Project.Controllers
             if (user.Balance < dto.Amount)
                 return BadRequest("Your account does not have enough balance to complete this withdraw");
 
-            var withdrawType = unitOfWork.PaymentWithdrawTypes.SingleOrDefault(pwt => pwt.Name == PaymentWithdrawTypeNames.Withdraw);
+            var withdrawType = unitOfWork.TransferTypes.SingleOrDefault(pwt => pwt.Name == TransferTypeNames.Withdraw);
 
-            var withdraw = new PaymentWithdraw()
+            var withdraw = new Transfer()
             {
                 UserId = GetUserId(),
                 Date = DateTime.Now,
@@ -48,7 +48,7 @@ namespace Project.Controllers
         public IActionResult Deposit(DepositDto dto)
         {
             var student = unitOfWork.Users.Get(dto.UserId);
-            var depositType = unitOfWork.PaymentWithdrawTypes.SingleOrDefault(pwt => pwt.Name == PaymentWithdrawTypeNames.Payment);
+            var depositType = unitOfWork.TransferTypes.SingleOrDefault(pwt => pwt.Name == TransferTypeNames.Payment);
 
             if (student == null)
                 return NotFound("user was not found");
@@ -56,7 +56,7 @@ namespace Project.Controllers
             if (student.RoleId != unitOfWork.Roles.GetStudentRoleId())
                 return BadRequest("This user is not authorized as a student");
 
-            var deposit = new PaymentWithdraw()
+            var deposit = new Transfer()
             {
                 UserId = student.Id,
                 Date = DateTime.Now,

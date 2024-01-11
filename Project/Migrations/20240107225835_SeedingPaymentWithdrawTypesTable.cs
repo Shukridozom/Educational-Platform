@@ -11,8 +11,8 @@ namespace Project.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql($"INSERT INTO PaymentWithdrawTypes (Name) VALUES ('{PaymentWithdrawTypeNames.Payment}')");
-            migrationBuilder.Sql($"INSERT INTO PaymentWithdrawTypes (Name) VALUES ('{PaymentWithdrawTypeNames.Withdraw}')");
+            migrationBuilder.Sql($"INSERT INTO PaymentWithdrawTypes (Name) VALUES ('{TransferTypeNames.Payment}')");
+            migrationBuilder.Sql($"INSERT INTO PaymentWithdrawTypes (Name) VALUES ('{TransferTypeNames.Withdraw}')");
         }
 
         /// <inheritdoc />
