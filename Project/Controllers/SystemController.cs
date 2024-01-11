@@ -9,23 +9,23 @@ namespace Project.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SiteProfitPercentageController : AppControllerBase
+    public class SystemController : AppControllerBase
     {
-        public SiteProfitPercentageController(IUnitOfWork unitOfWork, IConfiguration config, IMapper mapper)
+        public SystemController(IUnitOfWork unitOfWork, IConfiguration config, IMapper mapper)
             : base(unitOfWork, config, mapper)
         {
 
         }
 
-        [Authorize(Roles =$"{RoleName.Admin},{RoleName.Author}")]
-        [HttpGet]
+        [Authorize(Roles = $"{RoleName.Admin},{RoleName.Author}")]
+        [HttpGet("profitPercentage")]
         public IActionResult Get()
         {
             return Ok(unitOfWork.SystemVariables.GetProfitPercentageValue());
         }
 
         [Authorize(Roles = RoleName.Admin)]
-        [HttpPut]
+        [HttpPut("profitPercentage")]
         public IActionResult Put(double percentage)
         {
             if (percentage < 0.0 || percentage > 1.0)
@@ -38,6 +38,20 @@ namespace Project.Controllers
             unitOfWork.Complete();
 
             return Ok();
+        }
+
+        [Authorize(Roles = RoleName.Admin)]
+        [HttpGet("balance")]
+        public IActionResult GetBalance()
+        {
+            return Ok(unitOfWork.Transfers.GetSystemBalance());
+        }
+
+        [Authorize(Roles = RoleName.Admin)]
+        [HttpGet("profit")]
+        public IActionResult GetProfit()
+        {
+            return Ok(unitOfWork.Enrollments.GetSystemProfit());
         }
     }
 }
