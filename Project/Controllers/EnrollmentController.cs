@@ -19,17 +19,12 @@ namespace Project.Controllers
 
         }
 
-        [Authorize(Roles = $"{RoleName.Student},{RoleName.Admin}")]
-        [HttpGet("{studentId?}")]
-        public IActionResult Get(int studentId = 0)
+        [Authorize(Roles = RoleName.Student)]
+        [HttpGet()]
+        public IActionResult Get()
         {
-            int userId;
-            if (HttpContext.User.IsInRole(RoleName.Admin))
-                userId = studentId;
-            else
-                userId = GetUserId();
-
-            var enrollments = unitOfWork.Enrollments.Find(en => en.UserId == userId);
+            
+            var enrollments = unitOfWork.Enrollments.Find(en => en.UserId == GetUserId());
             var enrollemntDtos = new List<EnrollmentDto>();
 
             foreach (var enrollment in enrollments)
