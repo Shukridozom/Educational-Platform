@@ -7,7 +7,7 @@ namespace Project.Core
         IUserRepository Users { get; }
         IRoleRepository Roles { get; }
         ICourseRepository Course { get; }
-        ILectureRepository Lectures { get; }
+        ILessonRepository Lessons { get; }
         IEnrollmentRepository Enrollments { get; }
         ISystemVariablesRepository SystemVariables { get; }
         ITransferRepository Transfers { get; }

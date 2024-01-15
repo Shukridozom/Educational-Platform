@@ -1,6 +1,6 @@
 ﻿namespace Project.Core.Domains
 {
-    public class Lecture
+    public class Lesson
     {
         public int Id { get; set; }
         public string Title { get; set; }

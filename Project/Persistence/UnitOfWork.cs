@@ -9,7 +9,7 @@ namespace Project.Persistence
         public IUserRepository Users { get; }
         public IRoleRepository Roles { get; }
         public ICourseRepository Course { get; }
-        public ILectureRepository Lectures { get; }
+        public ILessonRepository Lessons { get; }
         public IEnrollmentRepository Enrollments { get; }
         public ISystemVariablesRepository SystemVariables { get; set; }
         public ITransferRepository Transfers { get; }
@@ -19,7 +19,7 @@ namespace Project.Persistence
             IUserRepository userRepository,
             IRoleRepository roleRepository,
             ICourseRepository courseRepository,
-            ILectureRepository lectureRepository,
+            ILessonRepository lessonRepository,
             IEnrollmentRepository enrollmentRepository,
             ISystemVariablesRepository systemVariablesRepository,
             ITransferRepository transferRepository,
@@ -30,7 +30,7 @@ namespace Project.Persistence
             Users = userRepository;
             Roles = roleRepository;
             Course = courseRepository;
-            Lectures = lectureRepository;
+            Lessons = lessonRepository;
             Enrollments = enrollmentRepository;
             SystemVariables = systemVariablesRepository;
             Transfers = transferRepository;

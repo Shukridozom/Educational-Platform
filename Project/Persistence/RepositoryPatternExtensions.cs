@@ -14,7 +14,7 @@ namespace Project.Persistence
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IRoleRepository, RoleRepository>();
             services.AddTransient<ICourseRepository, CourseRepository>();
-            services.AddTransient<ILectureRepository, LectureRepository>();
+            services.AddTransient<ILessonRepository, LessonRepository>();
             services.AddTransient<IEnrollmentRepository, EnrollmentRepository>();
             services.AddTransient<ISystemVariablesRepository, SystemVariablesRepository>();
             services.AddTransient<ITransferRepository, TransferRepository>();

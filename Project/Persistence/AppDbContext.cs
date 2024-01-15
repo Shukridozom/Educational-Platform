@@ -11,7 +11,7 @@ namespace Project.Persistence
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Course> Courses { get; set; }
-        public DbSet<Lecture> Lectures { get; set; }
+        public DbSet<Lesson> Lessons { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<SystemVariables> SystemVariables { get; set; }
         public DbSet<TransferType> TransferTypes { get; set; }
@@ -84,23 +84,23 @@ namespace Project.Persistence
                 .HasForeignKey(c => c.UserId);
 
 
-            //Lecture Entity:
-            modelBuilder.Entity<Lecture>()
+            //Lesson Entity:
+            modelBuilder.Entity<Lesson>()
                 .Property(l => l.Title)
                 .HasMaxLength(128)
                 .IsRequired();
 
-            modelBuilder.Entity<Lecture>()
+            modelBuilder.Entity<Lesson>()
                 .Property(l => l.Body)
                 .HasMaxLength(4096)
                 .IsRequired();
 
-            modelBuilder.Entity<Lecture>()
+            modelBuilder.Entity<Lesson>()
                 .HasOne(l => l.Course)
-                .WithMany(c => c.Lectures)
+                .WithMany(c => c.Lessons)
                 .HasForeignKey(l => l.CourseId);
 
-            modelBuilder.Entity<Lecture>()
+            modelBuilder.Entity<Lesson>()
                 .HasKey(l => new { l.CourseId, l.Id });
 
 

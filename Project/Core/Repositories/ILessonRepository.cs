@@ -2,7 +2,7 @@
 
 namespace Project.Core.Repositories
 {
-    public interface ILectureRepository : IRepository<Lecture>
+    public interface ILessonRepository : IRepository<Lesson>
     {
     }
 }

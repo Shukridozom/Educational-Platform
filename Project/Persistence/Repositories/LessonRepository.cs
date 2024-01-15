@@ -3,9 +3,9 @@ using Project.Core.Repositories;
 
 namespace Project.Persistence.Repositories
 {
-    public class LectureRepository : Repository<Lecture>, ILectureRepository
+    public class LessonRepository : Repository<Lesson>, ILessonRepository
     {
-        public LectureRepository(AppDbContext context)
+        public LessonRepository(AppDbContext context)
             :base(context)
         {
 
