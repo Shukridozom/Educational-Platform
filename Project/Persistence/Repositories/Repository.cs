@@ -34,6 +34,24 @@ namespace Project.Persistence.Repositories
             return _entity.ToList();
         }
 
+        public IEnumerable<TEntity> GetAll(int pageIndex, int pageLength)
+        {
+            if (pageIndex <= 0 || pageLength <= 0)
+                return _entity.ToList();
+
+            return _entity.Skip((pageIndex - 1) * pageLength).Take(pageLength).ToList();
+        }
+
+        public int Count()
+        {
+            return _entity.Count();
+        }
+
+        public int Count(Expression<Func<TEntity, bool>> predicate)
+        {
+            return _entity.Count(predicate);
+        }
+
         public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
             return _entity.Where(predicate).ToList();
@@ -53,5 +71,6 @@ namespace Project.Persistence.Repositories
         {
             _entity.RemoveRange(entities);
         }
+
     }
 }
