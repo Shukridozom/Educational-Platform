@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Project.Core;
+using Project.Core.Dtos;
 using Project.Persistence;
 using System.Security.Claims;
 using System.Text.Json.Nodes;
@@ -40,6 +41,21 @@ namespace Project.Controllers
             var userClaims = identity.Claims;
 
             return Convert.ToInt32(userClaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)?.Value);
+        }
+
+        protected object PaginatedList<T>(PaginationDto pagination ,int totalCount, IEnumerable<T> data) where T : class
+        {
+            if (pagination == null)
+                return data;
+
+            return new
+            {
+                PageIndex = pagination.PageIndex,
+                PageLength = pagination.PageLength,
+                TotalCount = totalCount,
+                Data = data
+            };
+
         }
     }
 }
