@@ -58,7 +58,7 @@ namespace Project.Controllers
             return Created(Request.GetDisplayUrl() + $"/{course.Id}", mapper.Map<Course, CourseDto>(course));
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
         [Authorize(Roles = RoleName.Author)]
         public IActionResult Put(int id, NewCourseDto dto)
         {
@@ -71,7 +71,7 @@ namespace Project.Controllers
             return Ok();
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [Authorize(Roles = RoleName.Author)]
         public IActionResult Delete(int id)
         {

@@ -26,7 +26,7 @@ namespace Project.Controllers
 
         [HttpGet]
         [Authorize]
-        [Route("/api/accounts")]
+        [Route("/api/account")]
         public IActionResult GetAccount()
         {
 
