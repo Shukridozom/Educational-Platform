@@ -19,6 +19,11 @@ namespace Project.Core
 
             CreateMap<Enrollment, EnrollmentDto>()
                 .ForMember(dest => dest.StudentId, opt => opt.MapFrom(src => src.UserId));
+
+            CreateMap<Lesson, LessonDto>();
+            CreateMap<LessonDto, Lesson>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Index, opt => opt.Ignore());
         }
     }
 }
