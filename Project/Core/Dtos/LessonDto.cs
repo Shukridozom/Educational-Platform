@@ -5,6 +5,7 @@ namespace Project.Core.Dtos
 {
     public class LessonDto
     {
+        [Required]
         public int Id { get; set; }
         [Required]
         [MaxLength(128)]
