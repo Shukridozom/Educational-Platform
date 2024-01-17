@@ -4,6 +4,6 @@ namespace Project.Core.Repositories
 {
     public interface ILessonRepository : IRepository<Lesson>
     {
-        Lesson GetLessonWithCourse(int id);
+        Lesson GetLessonWithCourse(int courseId, byte lessonId);
     }
 }

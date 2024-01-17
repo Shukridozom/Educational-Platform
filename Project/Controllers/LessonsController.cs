@@ -20,11 +20,11 @@ namespace Project.Controllers
 
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{courseId}/{lessonId}")]
         [Authorize(Roles = $"{RoleName.Author},{RoleName.Student}")]
-        public IActionResult Get(int id)
+        public IActionResult Get(int courseId, byte lessonId)
         {
-            var lesson = unitOfWork.Lessons.GetLessonWithCourse(id);
+            var lesson = unitOfWork.Lessons.GetLessonWithCourse(courseId, lessonId);
             if (lesson == null)
                 return NotFound();
 
@@ -54,14 +54,8 @@ namespace Project.Controllers
             course.Lessons.Add(lesson);
             unitOfWork.Complete();
 
-            return CreatedAtAction(nameof(Get), new { Id = lesson.Id }, mapper.Map<Lesson, LessonDto>(lesson));
+            return CreatedAtAction(nameof(Get), new { lesson.CourseId, lesson.Id }, mapper.Map<Lesson, LessonDto>(lesson));
         }
 
-        [HttpPut("{id}")]
-        [Authorize(Roles = RoleName.Author)]
-        public IActionResult Put(int id, LessonDto dto)
-        {
-            return null;
-        }
     }
 }

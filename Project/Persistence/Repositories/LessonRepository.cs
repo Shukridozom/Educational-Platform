@@ -12,9 +12,9 @@ namespace Project.Persistence.Repositories
 
         }
 
-        public Lesson GetLessonWithCourse(int id)
+        public Lesson GetLessonWithCourse(int courseId, byte lessonId)
         {
-            return Context.Lessons.Include(l => l.Course).SingleOrDefault(l => l.Id == id);
+            return Context.Lessons.Include(l => l.Course).SingleOrDefault(l => l.Id == lessonId && l.CourseId == courseId);
         }
     }
 }
