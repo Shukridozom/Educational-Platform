@@ -19,7 +19,10 @@ namespace Project.Persistence.Repositories
 
         public Course GetCourseWithLessons(int courseId)
         {
-            return Context.Courses.Include(c => c.Lessons).SingleOrDefault(c => c.Id == courseId);
+            var course = Context.Courses.Include(c => c.Lessons).SingleOrDefault(c => c.Id == courseId);
+            course.Lessons.OrderBy(l => l.Index);
+            
+            return course;
         }
     }
 }
