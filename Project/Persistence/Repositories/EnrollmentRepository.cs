@@ -25,5 +25,10 @@ namespace Project.Persistence.Repositories
 
             return profit;
         }
+
+        public bool IsEnrolled(int userId, int courseId)
+        {
+            return Context.Enrollments.SingleOrDefault(en => en.UserId == userId && en.CourseId == courseId) != null;
+        }
     }
 }

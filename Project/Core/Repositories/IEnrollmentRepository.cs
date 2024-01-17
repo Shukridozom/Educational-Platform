@@ -6,6 +6,7 @@ namespace Project.Core.Repositories
     {
         IList<int> GetStudentEnrollmentsKeyList(int userId);
         double GetSystemProfit();
+        bool IsEnrolled(int userId, int courseId);
 
     }
 }
