@@ -31,7 +31,7 @@ namespace Project.Controllers
             if (User.IsInRole(RoleName.Author) && lesson.Course.UserId != GetUserId())
                 return NotFound();
 
-            if (User.IsInRole(RoleName.Student) && !unitOfWork.Enrollments.IsEnrolled(GetUserId(), id))
+            if (User.IsInRole(RoleName.Student) && !unitOfWork.Enrollments.IsEnrolled(GetUserId(), lesson.CourseId))
                 return NotFound();
 
             return Ok(mapper.Map<Lesson, LessonDto>(lesson));
@@ -50,11 +50,18 @@ namespace Project.Controllers
                 return BadRequest("unvalid courseId");
 
             var lesson = mapper.Map<LessonDto, Lesson>(dto);
-            lesson.Index =(byte) (course.Lessons.Count + 1);
+            lesson.Index = course.Lessons.Count + 1;
             course.Lessons.Add(lesson);
             unitOfWork.Complete();
 
             return CreatedAtAction(nameof(Get), new { Id = lesson.Id }, mapper.Map<Lesson, LessonDto>(lesson));
+        }
+
+        [HttpPut("{id}")]
+        [Authorize(Roles = RoleName.Author)]
+        public IActionResult Put(int id, LessonDto dto)
+        {
+            return null;
         }
     }
 }
