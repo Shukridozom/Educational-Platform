@@ -16,5 +16,10 @@ namespace Project.Persistence.Repositories
         {
             return Context.Courses.Include(c => c.User).SingleOrDefault(c => c.Id == courseId);
         }
+
+        public Course GetCourseWithLessons(int courseId)
+        {
+            return Context.Courses.Include(c => c.Lessons).SingleOrDefault(c => c.Id == courseId);
+        }
     }
 }
