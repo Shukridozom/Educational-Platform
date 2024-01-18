@@ -20,7 +20,7 @@ namespace Project.Persistence.Repositories
         public Course GetCourseWithLessons(int courseId)
         {
             var course = Context.Courses.Include(c => c.Lessons).SingleOrDefault(c => c.Id == courseId);
-            course.Lessons.OrderBy(l => l.Index);
+            course.Lessons = course.Lessons.OrderBy(l => l.Index).ToList();
             
             return course;
         }
