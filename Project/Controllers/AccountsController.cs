@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -62,7 +63,7 @@ namespace Project.Controllers
 
             unitOfWork.Complete();
 
-            return CreatedAtAction(nameof(GetAccount), new { Id = user.Id }, mapper.Map<User, UserDto>(user));
+            return Ok(mapper.Map<User, UserDto>(user));
         }
 
         [HttpPost]
