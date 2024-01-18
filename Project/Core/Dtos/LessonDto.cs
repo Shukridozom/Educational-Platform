@@ -5,7 +5,6 @@ namespace Project.Core.Dtos
 {
     public class LessonDto
     {
-        [Required]
         public int Id { get; set; }
         [Required]
         [MaxLength(128)]
@@ -14,7 +13,6 @@ namespace Project.Core.Dtos
         [MaxLength(4096)]
         public string Body { get; set; }
         public byte Index { get; set; }
-        [Required]
         public int CourseId { get; set; }
     }
 }

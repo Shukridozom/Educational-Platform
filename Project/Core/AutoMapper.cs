@@ -23,7 +23,8 @@ namespace Project.Core
             CreateMap<Lesson, LessonDto>();
             CreateMap<LessonDto, Lesson>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
-                .ForMember(dest => dest.Index, opt => opt.Ignore());
+                .ForMember(dest => dest.Index, opt => opt.Ignore())
+                .ForMember(dest => dest.CourseId, opt => opt.Ignore());
         }
     }
 }

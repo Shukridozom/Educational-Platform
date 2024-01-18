@@ -74,11 +74,11 @@ namespace Project.Controllers
             return Ok(mapper.Map<Lesson, LessonDto>(lesson));
         }
 
-        [HttpPost]
+        [HttpPost("{courseId}")]
         [Authorize(Roles = RoleName.Author)]
-        public IActionResult Post(LessonDto dto)
+        public IActionResult Post(int courseId, LessonDto dto)
         {
-            var course = unitOfWork.Course.Get(dto.CourseId);
+            var course = unitOfWork.Course.Get(courseId);
 
             if (course == null)
                 return BadRequest("unvalid courseId");
@@ -87,14 +87,15 @@ namespace Project.Controllers
                 return BadRequest("unvalid courseId");
 
             var lesson = mapper.Map<LessonDto, Lesson>(dto);
-            lesson.Index = unitOfWork.Lessons.Count(l => l.CourseId == dto.CourseId) + 1;
+            lesson.Index = unitOfWork.Lessons.Count(l => l.CourseId == courseId) + 1;
+            lesson.CourseId = courseId;
             course.Lessons.Add(lesson);
             unitOfWork.Complete();
 
             return CreatedAtAction(nameof(Get), new { lesson.CourseId, lesson.Id }, mapper.Map<Lesson, LessonDto>(lesson));
         }
 
-        [HttpPut]
+        [HttpPut("{courseId}/{lessonId}")]
         [Authorize(Roles = RoleName.Author)]
         public IActionResult Put(int courseId, byte lessonId, LessonDto dto)
         {
@@ -111,7 +112,7 @@ namespace Project.Controllers
             return Ok();
         }
 
-        [HttpPatch]
+        [HttpPatch("{courseId}/{lessonId}/{index}")]
         [Authorize(Roles = RoleName.Author)]
         public IActionResult UpdateLessonIndex(int courseId, byte lessonId, int index)
         {
@@ -143,7 +144,7 @@ namespace Project.Controllers
             return Ok();
         }
 
-        [HttpDelete]
+        [HttpDelete("{courseId}/{lessonId}/{index}")]
         [Authorize(Roles = RoleName.Author)]
         public IActionResult Delete(int courseId, byte lessonId)
         {
