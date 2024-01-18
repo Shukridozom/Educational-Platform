@@ -96,13 +96,16 @@ namespace Project.Persistence
                 .IsRequired();
 
             modelBuilder.Entity<Lesson>()
+                .HasKey(l => new { l.Id, l.CourseId });
+
+            modelBuilder.Entity<Lesson>()
+                .Property(l => l.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Lesson>()
                 .HasOne(l => l.Course)
                 .WithMany(c => c.Lessons)
                 .HasForeignKey(l => l.CourseId);
-
-            modelBuilder.Entity<Lesson>()
-                .HasKey(l => new { l.CourseId, l.Id });
-
 
             //Enrollment Entity:
             modelBuilder.Entity<Enrollment>()

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project.Persistence;
 
@@ -10,9 +11,11 @@ using Project.Persistence;
 namespace Project.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240118163606_DropLessonsTable")]
+    partial class DropLessonsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,35 +76,6 @@ namespace Project.Migrations
                     b.HasIndex("CourseId");
 
                     b.ToTable("Enrollments");
-                });
-
-            modelBuilder.Entity("Project.Core.Domains.Lesson", b =>
-                {
-                    b.Property<byte>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("tinyint unsigned");
-
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Body")
-                        .IsRequired()
-                        .HasMaxLength(4096)
-                        .HasColumnType("varchar(4096)");
-
-                    b.Property<int>("Index")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("varchar(128)");
-
-                    b.HasKey("Id", "CourseId");
-
-                    b.HasIndex("CourseId");
-
-                    b.ToTable("Lessons");
                 });
 
             modelBuilder.Entity("Project.Core.Domains.Role", b =>
@@ -257,17 +231,6 @@ namespace Project.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Project.Core.Domains.Lesson", b =>
-                {
-                    b.HasOne("Project.Core.Domains.Course", "Course")
-                        .WithMany("Lessons")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-                });
-
             modelBuilder.Entity("Project.Core.Domains.Transfer", b =>
                 {
                     b.HasOne("Project.Core.Domains.TransferType", "Type")
@@ -301,8 +264,6 @@ namespace Project.Migrations
             modelBuilder.Entity("Project.Core.Domains.Course", b =>
                 {
                     b.Navigation("Enrollments");
-
-                    b.Navigation("Lessons");
                 });
 
             modelBuilder.Entity("Project.Core.Domains.Role", b =>
