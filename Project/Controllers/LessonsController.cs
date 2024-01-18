@@ -23,7 +23,7 @@ namespace Project.Controllers
 
         [HttpGet("{courseId}")]
         [Authorize(Roles = $"{RoleName.Author},{RoleName.Student}")]
-        public IActionResult Get(int courseId)
+        public IActionResult GetAll(int courseId)
         {
             var courseWithLessons = unitOfWork.Course.GetCourseWithLessons(courseId);
             if (User.IsInRole(RoleName.Author) && courseWithLessons.UserId != GetUserId())
