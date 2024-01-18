@@ -92,7 +92,7 @@ namespace Project.Controllers
             course.Lessons.Add(lesson);
             unitOfWork.Complete();
 
-            return CreatedAtAction(nameof(Get), new { lesson.CourseId, lesson.Id }, mapper.Map<Lesson, LessonDto>(lesson));
+            return CreatedAtAction(nameof(Get), new {  courseId = lesson.CourseId, lessonId = lesson.Id }, mapper.Map<Lesson, LessonDto>(lesson));
         }
 
         [HttpPut("{courseId}/{lessonId}")]
