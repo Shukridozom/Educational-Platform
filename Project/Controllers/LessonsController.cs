@@ -144,7 +144,7 @@ namespace Project.Controllers
             return Ok();
         }
 
-        [HttpDelete("{courseId}/{lessonId}/{index}")]
+        [HttpDelete("{courseId}/{lessonId}")]
         [Authorize(Roles = RoleName.Author)]
         public IActionResult Delete(int courseId, byte lessonId)
         {
