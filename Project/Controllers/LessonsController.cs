@@ -56,7 +56,7 @@ namespace Project.Controllers
             return Ok(mapper.Map<Lesson, LessonDto>(lesson));
         }
 
-        [HttpGet("{courseId}/{index}")]
+        [HttpGet("getByIndex/{courseId}/{index}")]
         [Authorize(Roles = $"{RoleName.Author},{RoleName.Student}")]
         public IActionResult GetByIndex(int courseId, int index)
         {
