@@ -20,7 +20,7 @@ namespace Project.Controllers
         }
 
         [Authorize(Roles = RoleName.Student)]
-        [HttpGet()]
+        [HttpGet("/api/enrollments")]
         public IActionResult Get()
         {
             
