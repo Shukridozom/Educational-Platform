@@ -56,6 +56,13 @@ namespace Project.Persistence.Repositories
         {
             return _entity.Where(predicate).ToList();
         }
+        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate, int pageIndex, int pageLength)
+        {
+            if (pageIndex <= 0 || pageLength <= 0)
+                return Find(predicate);
+
+            return _entity.Where(predicate).Skip((pageIndex - 1) * pageLength).Take(pageLength).ToList();
+        }
 
         public TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate)
         {

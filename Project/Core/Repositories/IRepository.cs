@@ -13,6 +13,7 @@ namespace Project.Core.Repositories
         int Count();
         int Count(Expression<Func<TEntity, bool>> predicate);
         IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
+        IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate, int pageIndex, int pageLength);
         TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate);
 
         void Remove(TEntity entity);
