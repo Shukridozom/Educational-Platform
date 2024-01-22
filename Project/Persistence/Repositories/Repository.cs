@@ -37,7 +37,7 @@ namespace Project.Persistence.Repositories
         public IEnumerable<TEntity> GetAll(int pageIndex, int pageLength)
         {
             if (pageIndex <= 0 || pageLength <= 0)
-                return _entity.ToList();
+                return GetAll();
 
             return _entity.Skip((pageIndex - 1) * pageLength).Take(pageLength).ToList();
         }
