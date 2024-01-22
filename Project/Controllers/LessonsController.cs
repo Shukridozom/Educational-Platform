@@ -25,15 +25,16 @@ namespace Project.Controllers
         [Authorize(Roles = $"{RoleName.Author},{RoleName.Student}")]
         public IActionResult GetAll(int courseId)
         {
-            var courseWithLessons = unitOfWork.Course.GetCourseWithLessons(courseId);
-            if (User.IsInRole(RoleName.Author) && courseWithLessons.UserId != GetUserId())
+            var course = unitOfWork.Course.Get(courseId);
+            var lessons = unitOfWork.Lessons.Find(l => l.CourseId == courseId);
+            if (User.IsInRole(RoleName.Author) && course.UserId != GetUserId())
                 return NotFound();
 
-            if (User.IsInRole(RoleName.Student) && !unitOfWork.Enrollments.IsEnrolled(GetUserId(), courseWithLessons.Id))
+            if (User.IsInRole(RoleName.Student) && !unitOfWork.Enrollments.IsEnrolled(GetUserId(), course.Id))
                 return BadRequest("You're not enrolled in this course");
 
             var lessonsDto = new List<LessonDto>();
-            foreach (var lesson in courseWithLessons.Lessons)
+            foreach (var lesson in lessons)
                 lessonsDto.Add(mapper.Map<Lesson, LessonDto>(lesson));
 
             return Ok(lessonsDto);
