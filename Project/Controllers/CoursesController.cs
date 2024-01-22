@@ -23,12 +23,13 @@ namespace Project.Controllers
 
         [Authorize(Roles = $"{RoleName.Author},{RoleName.Student}")]
         [HttpGet]
-        public IActionResult Get() 
+        public IActionResult Get([FromQuery]PaginationDto pagination) 
         {
-
+            int numberOfCourses = 0;
             if(User.IsInRole(RoleName.Author))
             {
-                var courses = unitOfWork.Course.GetAuthorCoursesWithEnrollmentsCount(GetUserId());
+                var courses = unitOfWork.Course.GetAuthorCoursesWithEnrollmentsCount(GetUserId(), pagination.PageIndex, pagination.PageLength);
+                numberOfCourses = unitOfWork.Course.Count(c => c.UserId == GetUserId());
                 var coursesDto = new List<CourseForAuthorsDto>();
                 foreach (var course in courses)
                     coursesDto.Add(new CourseForAuthorsDto()
@@ -37,17 +38,20 @@ namespace Project.Controllers
                         CourseDto = course.CourseDto
                     });
 
-                return Ok(coursesDto);
+                return Ok(PaginatedList(pagination, numberOfCourses, coursesDto));
             }
+
             else
             {
-                var courses = unitOfWork.Course.GetAll();
+                var courses = unitOfWork.Course.GetAll(pagination.PageIndex, pagination.PageLength);
+                numberOfCourses = unitOfWork.Course.Count();
                 var coursesDto = new List<CourseDto>();
                 foreach (var course in courses)
                 {
                     coursesDto.Add(mapper.Map<Course, CourseDto>(course));
                 }
-                return Ok(coursesDto);
+
+                return Ok(PaginatedList(pagination, numberOfCourses, coursesDto));
             }
         }
 

@@ -47,5 +47,31 @@ namespace Project.Persistence.Repositories
                 })
                 .ToList();
         }
+
+        public IEnumerable<CourseForAuthorsDto> GetAuthorCoursesWithEnrollmentsCount(int userId, int pageIndex, int pageLength)
+        {
+            if (pageIndex <= 0 || pageLength <= 0)
+                return GetAuthorCoursesWithEnrollmentsCount(userId);
+
+            return Context.Courses
+                .Include(c => c.Enrollments)
+                .Where(c => c.UserId == userId)
+                .Select(c => new CourseForAuthorsDto()
+                {
+                    NummberOfEnrollments = c.Enrollments.Count(),
+                    CourseDto = new CourseDto()
+                    {
+                        Id = c.Id,
+                        AuthorId = c.UserId,
+                        Title = c.Title,
+                        Description = c.Description,
+                        Price = c.Price,
+                        Date = c.Date
+                    }
+                })
+                .Skip((pageIndex - 1) * pageLength)
+                .Take(pageLength)
+                .ToList();
+        }
     }
 }

@@ -8,5 +8,6 @@ namespace Project.Core.Repositories
         Course GetCourseWithAuthor(int courseId);
         Course GetCourseWithLessons(int courseId);
         IEnumerable<CourseForAuthorsDto> GetAuthorCoursesWithEnrollmentsCount(int userId);
+        IEnumerable<CourseForAuthorsDto> GetAuthorCoursesWithEnrollmentsCount(int userId, int pageIndex, int pageLength);
     }
 }
