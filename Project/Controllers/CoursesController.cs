@@ -29,9 +29,9 @@ namespace Project.Controllers
             if(User.IsInRole(RoleName.Author))
             {
                 var courses = unitOfWork.Course.GetAuthorCoursesWithEnrollmentsCount(GetUserId());
-                var coursesDto = new List<CourseWithEnrollmentsCountDto>();
+                var coursesDto = new List<CourseForAuthorsDto>();
                 foreach (var course in courses)
-                    coursesDto.Add(new CourseWithEnrollmentsCountDto()
+                    coursesDto.Add(new CourseForAuthorsDto()
                     {
                         NummberOfEnrollments = course.NummberOfEnrollments,
                         CourseDto = course.CourseDto
@@ -64,7 +64,7 @@ namespace Project.Controllers
             if (course.UserId == GetUserId() && User.IsInRole(RoleName.Author))
             {
                 var numberOfEnrollments = unitOfWork.Enrollments.Count(en => en.CourseId == course.Id);
-                return Ok(new CourseWithEnrollmentsCountDto()
+                return Ok(new CourseForAuthorsDto()
                 {
                     NummberOfEnrollments = numberOfEnrollments,
                     CourseDto = courseDto

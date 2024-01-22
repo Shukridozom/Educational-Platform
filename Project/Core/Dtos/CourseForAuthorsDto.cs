@@ -1,6 +1,6 @@
 ﻿namespace Project.Core.Dtos
 {
-    public class CourseWithEnrollmentsCountDto
+    public class CourseForAuthorsDto
     {
         public CourseDto CourseDto { get; set; }
         public int NummberOfEnrollments { get; set; }

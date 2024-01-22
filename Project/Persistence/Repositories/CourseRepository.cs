@@ -27,12 +27,12 @@ namespace Project.Persistence.Repositories
             return course;
         }
 
-        public IEnumerable<CourseWithEnrollmentsCountDto> GetAuthorCoursesWithEnrollmentsCount(int userId)
+        public IEnumerable<CourseForAuthorsDto> GetAuthorCoursesWithEnrollmentsCount(int userId)
         {
             return Context.Courses
                 .Include(c => c.Enrollments)
                 .Where(c => c.UserId == userId)
-                .Select(c => new CourseWithEnrollmentsCountDto()
+                .Select(c => new CourseForAuthorsDto()
                 {
                     NummberOfEnrollments = c.Enrollments.Count(),
                     CourseDto = new CourseDto()
