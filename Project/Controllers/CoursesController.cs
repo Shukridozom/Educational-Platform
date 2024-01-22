@@ -21,20 +21,37 @@ namespace Project.Controllers
 
         }
 
-        [Authorize(Roles = $"{RoleName.Admin},{RoleName.Author},{RoleName.Student}")]
+        [Authorize(Roles = $"{RoleName.Author},{RoleName.Student}")]
         [HttpGet]
         public IActionResult Get() 
         {
-            var courses = unitOfWork.Course.GetAll();
-            var courseDto = new List<CourseDto>();
-            foreach(var course in courses)
+
+            if(User.IsInRole(RoleName.Author))
             {
-                courseDto.Add(mapper.Map<Course, CourseDto>(course));
+                var courses = unitOfWork.Course.GetAuthorCoursesWithEnrollmentsCount(GetUserId());
+                var coursesDto = new List<CourseWithEnrollmentsCountDto>();
+                foreach (var course in courses)
+                    coursesDto.Add(new CourseWithEnrollmentsCountDto()
+                    {
+                        NummberOfEnrollments = course.NummberOfEnrollments,
+                        CourseDto = course.CourseDto
+                    });
+
+                return Ok(coursesDto);
             }
-            return Ok(courseDto);
+            else
+            {
+                var courses = unitOfWork.Course.GetAll();
+                var coursesDto = new List<CourseDto>();
+                foreach (var course in courses)
+                {
+                    coursesDto.Add(mapper.Map<Course, CourseDto>(course));
+                }
+                return Ok(coursesDto);
+            }
         }
 
-        [Authorize(Roles = $"{RoleName.Admin},{RoleName.Author},{RoleName.Student}")]
+        [Authorize(Roles = $"{RoleName.Author},{RoleName.Student}")]
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -42,7 +59,19 @@ namespace Project.Controllers
             if (course == null)
                 return NotFound();
 
-            return Ok(mapper.Map<Course, CourseDto>(course));
+            var courseDto = mapper.Map<Course, CourseDto>(course);
+
+            if (course.UserId == GetUserId() && User.IsInRole(RoleName.Author))
+            {
+                var numberOfEnrollments = unitOfWork.Enrollments.Count(en => en.CourseId == course.Id);
+                return Ok(new CourseWithEnrollmentsCountDto()
+                {
+                    NummberOfEnrollments = numberOfEnrollments,
+                    CourseDto = courseDto
+                });
+            }
+
+            return Ok(courseDto);
         }
 
         [HttpPost]

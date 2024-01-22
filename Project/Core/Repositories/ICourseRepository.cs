@@ -1,4 +1,5 @@
 ﻿using Project.Core.Domains;
+using Project.Core.Dtos;
 
 namespace Project.Core.Repositories
 {
@@ -6,5 +7,6 @@ namespace Project.Core.Repositories
     {
         Course GetCourseWithAuthor(int courseId);
         Course GetCourseWithLessons(int courseId);
+        IEnumerable<CourseWithEnrollmentsCountDto> GetAuthorCoursesWithEnrollmentsCount(int userId);
     }
 }
