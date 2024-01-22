@@ -21,16 +21,17 @@ namespace Project.Controllers
 
         [Authorize(Roles = RoleName.Student)]
         [HttpGet("/api/enrollments")]
-        public IActionResult Get()
+        public IActionResult Get([FromQuery]PaginationDto pagination)
         {
             
-            var enrollments = unitOfWork.Enrollments.Find(en => en.UserId == GetUserId());
+            var enrollments = unitOfWork.Enrollments.Find(en => en.UserId == GetUserId(), pagination.PageIndex, pagination.PageLength);
+            var numberOfEnrollments = unitOfWork.Enrollments.Count(en => en.UserId == GetUserId());
             var enrollemntDtos = new List<EnrollmentDto>();
 
             foreach (var enrollment in enrollments)
                 enrollemntDtos.Add(mapper.Map<Enrollment, EnrollmentDto>(enrollment));
 
-            return Ok(enrollemntDtos);
+            return Ok(PaginatedList(pagination, numberOfEnrollments, enrollemntDtos));
         }
 
         [Authorize(Roles = RoleName.Student)]
