@@ -30,7 +30,7 @@ namespace Project.Controllers
                 return NotFound();
 
             if (User.IsInRole(RoleName.Student) && !unitOfWork.Enrollments.IsEnrolled(GetUserId(), courseWithLessons.Id))
-                return NotFound();
+                return BadRequest("You're not enrolled in this course");
 
             var lessonsDto = new List<LessonDto>();
             foreach (var lesson in courseWithLessons.Lessons)
@@ -51,7 +51,7 @@ namespace Project.Controllers
                 return NotFound();
 
             if (User.IsInRole(RoleName.Student) && !unitOfWork.Enrollments.IsEnrolled(GetUserId(), lesson.CourseId))
-                return NotFound();
+                return BadRequest("You're not enrolled in this course");
 
             return Ok(mapper.Map<Lesson, LessonDto>(lesson));
         }
@@ -69,7 +69,7 @@ namespace Project.Controllers
                 return NotFound();
 
             if (User.IsInRole(RoleName.Student) && !unitOfWork.Enrollments.IsEnrolled(GetUserId(), lesson.CourseId))
-                return NotFound();
+                return BadRequest("You're not enrolled in this course");
 
             return Ok(mapper.Map<Lesson, LessonDto>(lesson));
         }
