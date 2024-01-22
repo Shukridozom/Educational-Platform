@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using MySqlX.XDevAPI;
 using Project.Core;
 using Project.Core.Domains;
 using Project.Core.Dtos;
@@ -27,15 +28,30 @@ namespace Project.Controllers
 
         [HttpGet]
         [Authorize]
-        [Route("/api/account")]
-        public IActionResult GetAccount()
+        [Route("/api/account/{id?}")]
+        public IActionResult Get(int id = 5465494) //Just a random initial value (because SwaggerUI doesn't seem to consider optional parameters
         {
+            if (id == 5465494)
+                id = GetUserId();
 
-            var user = unitOfWork.Users.GetUserWithRole(GetUserId());
+            var user = unitOfWork.Users.GetUserWithRole(id);
             if (user == null)
                 return NotFound();
 
-            return Ok(mapper.Map<User, UserDto>(user));
+            var userDto = mapper.Map<User, UserDto>(user);
+
+            if (id != GetUserId())
+                return Ok(new
+                {
+                    userDto.Id,
+                    userDto.Username,
+                    userDto.Email,
+                    userDto.FirstName,
+                    userDto.LastName,
+                    userDto.Role
+                });
+
+            return Ok(userDto);
         }
 
         [HttpPost("/api/register")]
@@ -63,7 +79,7 @@ namespace Project.Controllers
 
             unitOfWork.Complete();
 
-            return Ok(mapper.Map<User, UserDto>(user));
+            return CreatedAtAction(nameof(Get), new { user.Id }, mapper.Map<User, UserDto>(user));
         }
 
         [HttpPost]
