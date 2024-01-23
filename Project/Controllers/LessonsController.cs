@@ -23,10 +23,11 @@ namespace Project.Controllers
 
         [HttpGet("{courseId}")]
         [Authorize(Roles = $"{RoleName.Author},{RoleName.Student}")]
-        public IActionResult GetAll(int courseId)
+        public IActionResult GetAll(int courseId, [FromQuery]PaginationDto pagination)
         {
             var course = unitOfWork.Course.Get(courseId);
-            var lessons = unitOfWork.Lessons.Find(l => l.CourseId == courseId);
+            var lessons = unitOfWork.Lessons.GetLessonsOrderedByIndex(courseId, pagination.PageIndex, pagination.PageLength);
+            var numberOfLessons = unitOfWork.Lessons.Count(l => l.CourseId == courseId);
             if (User.IsInRole(RoleName.Author) && course.UserId != GetUserId())
                 return NotFound();
 
@@ -37,7 +38,7 @@ namespace Project.Controllers
             foreach (var lesson in lessons)
                 lessonsDto.Add(mapper.Map<Lesson, LessonDto>(lesson));
 
-            return Ok(lessonsDto);
+            return Ok(PaginatedList(pagination, numberOfLessons, lessonsDto));
         }
 
         [HttpGet("{courseId}/{lessonId}")]
