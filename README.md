@@ -11,7 +11,10 @@ There are three types of accounts (based on their role):
 
   **Note:**
 
-  **Admin** accounts are special accounts and can't be registered from the application, instead, they have to be directly created from the database (by either adding a new user to the users table with the role <ins>Admin</ins>, or calling the Stored Procedure **CreateAdminUser**, and the <ins>passwordHash</ins> column can be generated using this [Link](https://bcrypt.online/)).
+  **Admin** accounts are special accounts and can't be registered from the application, instead, they have to be directly created from the database (by either adding a new user to the users table with the role <ins>Admin</ins>, or calling the Stored Procedure **CreateAdminUser**, and the <ins>passwordHash</ins> column can be generated using this [Link](https://bcrypt.online/)). For simplicity, there is a hard-coded admin account with the following credentials:<br>
+  <ins>Username</ins>: admin<br>
+  <ins>Password</ins>: admin_
+
 
 ## Features
 
@@ -31,7 +34,7 @@ There are three types of accounts (based on their role):
 
   - <ins>Students</ins> can enroll in courses, and view the courses they had enrolled in them.
 
-* Transfer Manager:
+* **Transfer Manager:**
 
   - <ins>Admins</ins> can add deposits for student accounts.
 
