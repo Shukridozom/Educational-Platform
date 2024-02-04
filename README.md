@@ -1,6 +1,6 @@
 # Educational-Platform Project
 
-The Educational-Platform Project is a web-based application that allows authors to create courses, and allows students to browse the available courses and enroll in them, and for each enrollment the application deduct a percentage of the course price (from the author) as profit. This project was built using **ASP.NET Core** and provides a **RESTful APIs** for the frontend to interact with.
+The Educational-Platform Project is a web-based application that allows authors to create courses, and allows students to browse the available courses and enroll in them, and for each enrollment the application deduct a percentage of the course price (from the author) as profit. This project was built using **ASP.NET Core** and provides **RESTful APIs** for the frontend to interact with.
 
 Before using the application, users have to register.
 There are three types of accounts (based on their role):
